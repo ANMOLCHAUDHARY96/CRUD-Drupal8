@@ -93,7 +93,7 @@ public function validateForm(array &$form, FormStateInterface $form_state){
 public function submitForm(array &$form, FormStateInterface $form_state) {
 
   $mail = $form_state->getValue('Email');
-  $redirect = $form_state->setRedirect('stats.new_page');  //redirect on listing page after submit
+  //$redirect = $form_state->setRedirect('stats.new_page');  //redirect on listing page after submit
  
  if (empty($mail)) {
    drupal_set_message(t('There was a problem sending your message and it was not sent.'), 'error');

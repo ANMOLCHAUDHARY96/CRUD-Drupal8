@@ -18,7 +18,7 @@ function stats_mail($key, &$message, $params) {
 
 
 function get_details(){
-	global $base_url;
+	
 	if(\Drupal::database()->schema()->tableExists('application_details')){
 		$data = [];
 		$query = \Drupal::database()->select('application_details', 'ad');
@@ -32,28 +32,11 @@ function get_details(){
 //		$query->condition('ad.id', $id);
 		$rows = $query->execute();
 		$result = $rows->fetchAll();
-		$output = '<table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Mobile</th><th>Gender</th><th>Have You answer the question</th><th colspan=2>Operations</th></tr><thead><tbody>';
-		foreach ($result as $key => $value) {
-			$id = $value->id;
-			$username = $value->username;
-			$email = $value->email;
-			$mobile  = $value->mobile;
-			$gender = $value->gender;
-			$question = $value->question;
-			$current_path = \Drupal::service('path.current')->getPath();
-			//print($current_path);die;
-			$output .= "<tr><td>".$id."</td><td>".$username."</td><td>".$email."</td><td>".$mobile."</td><td>".$gender."</td><td>".$question."</td><td>"."<a href ='" . $base_url . '/delete/' .$id . "'>delete</a>"."</td><td>"."<a href ='" . $base_url . '/stats/myform?num=' .$id . "'>edit</a>"."</td></tr>";
-			 
-			
-		}
-
-		$output .= '</tbody></table>';
 		
-			return $output;
+		return $result;
 	}
 
 }
-
 
 // function updateDetails($id){
 // 	if(\Drupal::database()->schema()->tableExists('application_details')){
