@@ -1,0 +1,95 @@
+<?php
+
+
+function stats_mail($key, &$message, $params) {
+ 	switch ($key) {
+	   	case 'cusmail':
+		   	$message['headers'] = array(
+		      'content-type' => 'text/html',
+		      'MIME-Version' => '1.0',
+		    );
+
+			$message['from'] = 'anmolchaudhary96@gmail.com';//\Drupal::config('system.site')->get('mail');
+			$message['subject'] = t('Test');
+			$message['body'][] = $params['message'];
+			break;
+ 	}
+}
+
+
+function get_details(){
+	global $base_url;
+	if(\Drupal::database()->schema()->tableExists('application_details')){
+		$data = [];
+		$query = \Drupal::database()->select('application_details', 'ad');
+		$query->fields('ad', ['id']);
+		$query->fields('ad', ['username']);
+		$query->fields('ad', ['email']);
+		$query->fields('ad', ['mobile']);
+		$query->fields('ad', ['gender']);
+		$query->fields('ad', ['question']);
+		$query->orderBy('ad.changed', 'ASC');
+//		$query->condition('ad.id', $id);
+		$rows = $query->execute();
+		$result = $rows->fetchAll();
+		$output = '<table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Mobile</th><th>Gender</th><th>Have You answer the question</th><th colspan=2>Operations</th></tr><thead><tbody>';
+		foreach ($result as $key => $value) {
+			$id = $value->id;
+			$username = $value->username;
+			$email = $value->email;
+			$mobile  = $value->mobile;
+			$gender = $value->gender;
+			$question = $value->question;
+			$current_path = \Drupal::service('path.current')->getPath();
+			//print($current_path);die;
+			$output .= "<tr><td>".$id."</td><td>".$username."</td><td>".$email."</td><td>".$mobile."</td><td>".$gender."</td><td>".$question."</td><td>"."<a href ='" . $base_url . '/delete/' .$id . "'>delete</a>"."</td><td>"."<a href ='" . $base_url . '/stats/myform?num=' .$id . "'>edit</a>"."</td></tr>";
+			 
+			
+		}
+
+		$output .= '</tbody></table>';
+		
+			return $output;
+	}
+
+}
+
+
+// function updateDetails($id){
+// 	if(\Drupal::database()->schema()->tableExists('application_details')){
+//     $result = get_by_query($id);
+//     kint($result);
+//     $query = \Drupal::database()->update('application_details');
+//     $query->fields(['username' =>$result[0]->username ,'email' => $result[0]->email ,'mobile' => $result[0]->mobile,
+//     'gender' => $result[0]->gender,'question' => $result[0]->question,]);
+//     $query->condition('id',$id);
+//     $result = $query->execute();
+//     //$result = $result->fetchAll();
+
+    
+// 	}
+
+//}
+
+function get_by_query($id) {
+
+	global $base_url;
+	if(\Drupal::database()->schema()->tableExists('application_details'))
+	$query = \Drupal::database()->select('application_details', 'ad');
+	$query->fields('ad', ['id']);
+	$query->fields('ad', ['username']);
+	$query->fields('ad', ['email']);
+	$query->fields('ad', ['mobile']);
+	$query->fields('ad', ['gender']);
+	$query->fields('ad', ['question']);
+	$query->orderBy('ad.changed', 'ASC');
+	$query->condition('ad.id', $id);
+	$rows = $query->execute();
+	
+	$result = $rows->fetchAll();
+
+	return $result;
+}
+
+
+?>

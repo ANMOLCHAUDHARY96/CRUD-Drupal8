@@ -1,0 +1,24 @@
+stats.form:
+  path: '/stats/myform'
+  defaults:
+    _title: 'Application form'
+    _form: '\Drupal\stats\Form\StatsForm'
+    requirements:
+      _permission: 'access content'
+
+stats.new_page:
+  path: '/mypage'
+  defaults:
+    _controller: '\Drupal\stats\Controller\NewController::myPage'
+    _title: 'Application Details'
+  requirements:
+    _permission: 'access content'
+
+
+stats.delete_page:
+  path: '/delete/{id}'
+  defaults:
+    _controller: '\Drupal\stats\Controller\NewController::deletePage'
+    _title: 'Page in D8 Custom'
+  requirements:
+    _permission: 'access content'    

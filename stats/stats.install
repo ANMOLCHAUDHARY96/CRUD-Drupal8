@@ -1,0 +1,51 @@
+<?php
+/**
+ * Implementing hook_schema
+ */
+function stats_schema() { 
+  $schema['application_details'] = array( 
+  	'fields' => array( 
+  		'id' => array( 
+  			'type' =>'serial', 
+  			'not null' => TRUE, 
+  		),
+      'username' => array( 
+  			'type' => 'varchar',
+        'description' => 'given by user',
+        'length' => 255,
+  		),
+
+  		'email' => array( 
+  			'type' => 'varchar',
+        'description' => 'User Email',
+  			'length' => 255,
+  		),
+      'mobile' => array( 
+  			'type' => 'int',
+        'description' => 'User mobile no',
+  			'length' => 10,
+        'size' => 'big',
+  		),
+      'gender' => array( 
+  			'type' => 'varchar',
+        'description' => 'Gender',
+        'length' => 255,
+  		),
+      'question' => array( 
+        'type' => 'int',
+        'length' => 10,
+        'description' => 'Question',
+      ),
+      'changed' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+        'description' => 'Date of Submission',
+        'default' => 0,
+      ),
+  	), 
+  	'primary key' => array('id'),
+  );
+  
+  return $schema; 
+}
